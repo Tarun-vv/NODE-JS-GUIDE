@@ -106,7 +106,7 @@ const tourSchema = new mongoose.Schema(
   },
 );
 
-// NOTE: #2 creating a Modal out of the Schema
+
 
 // NOTE: model property: 1st arg is name of model, 2nd arg is the schema we created
 
@@ -163,6 +163,7 @@ tourSchema.pre('aggregate', function (next) {
 //   .catch((err) => console.log(err));
 
 // NOTE: all middlewarem ust happen before model initialization
+// NOTE: #2 creating a Modal out of the Schema
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
