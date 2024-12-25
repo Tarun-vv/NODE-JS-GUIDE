@@ -90,7 +90,7 @@ NOTE: connecting node app with mongo db and mogoose
 18. can look at data in CLUSTER by clicking on cluster -> collections
 19. whitelisting our network -> network access -> add IP address -> allow access from anywhere -> conform
 
-------------------------------------
+---
 
 NOTE: CONNECTING MONGO SHELL to APP
 
@@ -115,3 +115,29 @@ make the APIFeatures.js file and require in the controller file and add that fea
 NOTE: ALAISING DONE IN tourRoutes.js and in controller
 
 NOTE: AGGREGATION PIPELINE: calculating total sum, max, min values in a document
+in tourController.js
+
+NOTE: VIRTUAL PROPERTIES
+in tourModel.js
+
+NOTE: IMPORTANT MIDDLEWARE
+in tourModel.js
+
+1. DOCUMENT middlelware -> runs each time a new document is saved , can run BEFORE the save happens or AFTER the save happens /slug creation
+
+2. QUERY middleware: before or after a certain query is executed / secret doc creation
+
+3. AGGREGATION MIDDLEWARE -> preventing use of secret tour
+
+NOTE: VALIDATIONS
+in tourModel.js
+checking if input values match our requirements
+
+CUSTOM VALIDATORS
+npm i validator
+
+NOTE: ERROR HANDLING
+
+in app.js
+
+1. HANDLING UNHANDLED ROUTES - routes that are not present for eg: 'api/v1/tours/sjfhhwsoj ....'

@@ -84,6 +84,16 @@ app.use('/api/v1/tours', tourRouter);
 // tourRouter.route('/:id').get(getTour).patch(updateTour);
 // -----------------------------------------
 
+// NOTE: ERROR HANDLING
+
+// NOTE: UNHANDLED ROUTES -> make sure this is after all the route handler defenitions
+app.all('*', (req, res, next) => {
+  res.status(404).json({
+    status: 'fail',
+    message: `Cant find ${req.originalUrl} on this server. Try something else! `,
+  });
+});
+
 module.exports = app;
 // const port = 3000;
 // app.listen(port, () => {
