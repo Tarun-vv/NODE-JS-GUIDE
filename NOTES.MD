@@ -90,7 +90,7 @@ NOTE: connecting node app with mongo db and mogoose
 18. can look at data in CLUSTER by clicking on cluster -> collections
 19. whitelisting our network -> network access -> add IP address -> allow access from anywhere -> conform
 
----
+------------------------------------
 
 NOTE: CONNECTING MONGO SHELL to APP
 
@@ -101,9 +101,13 @@ NOTE: CONNECTING MONGO SHELL to APP
 3. if you rerun the server you should see 'DB connection successful'
 
 NOTE: creating Modals using mongoose
-1. create modals folder
-2. follow the steps 
-in server.js
 
-NOTE: creating documents out of Modals
-in server.js
+1. create modals folder
+2. follow the steps
+3. export and import it to tourController.js file
+
+NOTE: creating documents out of Modals + CRUD functions
+in tourController.js
+
+NOTE: API FEATURES 
+will refactor

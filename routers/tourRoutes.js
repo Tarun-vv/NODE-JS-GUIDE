@@ -14,11 +14,12 @@ router.param('id', (req, res, next, value) => {
 router
   .route('/')
   .get(tourController.getAllTours)
-  .post(tourController.checkBody, tourController.createTour); // NOTE: replace the complete route to just '/'
+  .post(tourController.createTour); // NOTE: replace the complete route to just '/'
 
 router
   .route('/:id')
   .get(tourController.getTour)
-  .patch(tourController.updateTour);
+  .patch(tourController.updateTour)
+  .delete(tourController.deleteTour);
 
 module.exports = router;
