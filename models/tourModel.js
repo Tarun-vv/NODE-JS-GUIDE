@@ -58,6 +58,8 @@ const tourSchema = new mongoose.Schema({
     // NOTE: Date modelling
     type: Date,
     default: Date.now(),
+    // NOTE: will not be displayed in the response
+    select: false,
   },
   startDates: [Date],
 });

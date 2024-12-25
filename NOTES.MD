@@ -109,5 +109,9 @@ NOTE: creating Modals using mongoose
 NOTE: creating documents out of Modals + CRUD functions
 in tourController.js
 
-NOTE: API FEATURES 
-will refactor
+NOTE: API FEATURES -> pagination , sorting, filtering
+make the APIFeatures.js file and require in the controller file and add that features and await what you want in the next line
+
+NOTE: ALAISING DONE IN tourRoutes.js and in controller
+
+NOTE: AGGREGATION PIPELINE: calculating total sum, max, min values in a document
