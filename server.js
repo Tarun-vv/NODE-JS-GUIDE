@@ -2,6 +2,13 @@
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' });
 
+// NOTE: UNCAUGHT EXCEPTION - come later to here
+process.on('uncaughtException', (err) => {
+  console.log('UNCAUGHT EXCEPTION');
+  console.log(err.name, err.message);
+  process.exit(1);
+});
+
 // NOTE: config mongodb
 const mongoose = require('mongoose');
 
@@ -24,8 +31,15 @@ const app = require('./app');
 
 // NOTE: using variables
 const port = process.env.PORT;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`App is running on port ${port}`);
 });
 
-console.log(process.env);
+// NOTE: UNHANDLED REJECTION ERROR / DATABASE CONNECTION ERROR
+process.on('unhandledRejection', (err) => {
+  console.log('UNHANDLED REJECTION');
+  console.log(err.name, err.message);
+  server.close(() => {
+    process.exit(1);
+  });
+});

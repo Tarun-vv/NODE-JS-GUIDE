@@ -141,3 +141,25 @@ NOTE: ERROR HANDLING
 in app.js
 
 1. HANDLING UNHANDLED ROUTES - routes that are not present for eg: 'api/v1/tours/sjfhhwsoj ....'
+
+2. GLOBAL ERROR HANDLING FUNCTION and ERROR DURING PRODUCTION vs DEVELOPMENT SETUP
+3. ERROR CLASS -> in utils folder
+4. after class creation import in app.js and test
+
+---- follow tourCOntroller from now on!! 5. CATCHING ERROR IN ASYNC FUNCTIONS -> modify all functions 6. export it into catchAsync.js in utils 7. wrap all blocks into catchAsync
+
+8. ADDING 404 ERRORS
+   no tour with getTour in tourController.js
+
+NOTE: 3 OPERATIONAL ERRORS TO FIX
+
+all done in errorController.js
+
+1. HANDLING INVALID IDS in getTour function
+2. DUPLICATE NAME ERROR while creating tour and UPDATING tours with wrong data
+3. VALIDDATION ERROR: wrong data while updating tour
+
+in server.js
+
+4. DATABASE CONNECTION ERROR: / UNHANDLED REJECTIONS -> or unhandled promise errors
+5. UNCAUGHT EXCEPTIONS -> errors in synchronous code but is not caught anywhere

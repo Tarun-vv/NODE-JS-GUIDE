@@ -3,6 +3,10 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+// NOTE: ERROR HANDLING
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController');
+
 app.use((req, res, next) => {
   console.log('Hello from the middleware 💪');
 
@@ -88,11 +92,12 @@ app.use('/api/v1/tours', tourRouter);
 
 // NOTE: UNHANDLED ROUTES -> make sure this is after all the route handler defenitions
 app.all('*', (req, res, next) => {
-  res.status(404).json({
-    status: 'fail',
-    message: `Cant find ${req.originalUrl} on this server. Try something else! `,
-  });
+  // NOTE: to create error create a new error in the next function and express will take it to the this global function and send the response
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
+
+// NOTE: GLOBAL ERROR HANDLING MIDDLEWARE FUNCTION
+app.use(globalErrorHandler);
 
 module.exports = app;
 // const port = 3000;
