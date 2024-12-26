@@ -3,6 +3,12 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+// NOTE: SIMPLE MIDDLEWARE FUNC
+app.use((req, res, next) => {
+  console.log(req.headers);
+  next();
+});
+
 // NOTE: ERROR HANDLING
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -71,6 +77,7 @@ app.use(express.static(`${__dirname}/public`)); // NOTE: file does not exist her
 // ------------------------------------
 // NOTE: IMPORTING tourRouter from file
 const tourRouter = require('./routers/tourRoutes');
+const userRouter = require('./routers/userRoutes');
 
 // NOTE: FINAL VERSION OF ROUTE:
 
@@ -79,6 +86,7 @@ const tourRouter = require('./routers/tourRoutes');
 
 // NOTE: #2 call the middleware with the route and the router
 app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
 
 // app.route('/api/v1/tours').get(getAllTours);
 // NOTE: #3 replace the app with tourRouter

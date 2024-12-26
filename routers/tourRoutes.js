@@ -1,6 +1,9 @@
 const express = require('express');
 const tourController = require('./../controllers/tourController');
 
+// NOTE: FOR PROTECT ROUTE:
+const authController = require('./../controllers/authController');
+
 // NOTE: rename tourRouter to router and export it , rename it as tourRouter in the app.js file
 
 const router = express.Router();
@@ -21,7 +24,8 @@ router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 
 router
   .route('/')
-  .get(tourController.getAllTours)
+  // NOTE: use protect when u come to JWT section
+  .get(authController.protect, tourController.getAllTours)
   .post(tourController.createTour); // NOTE: replace the complete route to just '/'
 
 router

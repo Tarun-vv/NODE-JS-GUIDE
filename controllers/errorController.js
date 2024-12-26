@@ -20,6 +20,13 @@ const handleValidationErrorDB = (err) => {
   return new AppError(message, 400);
 };
 
+// NOTE: JWT ERROR HANDLER FUNCTION
+const handleJWTError = (err) =>
+  new AppError('Invalid token. Please log in again!', 401);
+
+const handleJWTExpiredError = (err) =>
+  new AppError('Your token has expired! Please log in again', 401);
+
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -68,6 +75,14 @@ const globalErrorHandler = (err, req, res, next) => {
     // NOTE: mongoose validdation error
     if (error._message === 'Validation failed')
       error = handleValidationErrorDB(error);
+
+    // NOTE: JWT ERROR HANDLING
+    // NOTE: #1 wrong token
+    if (error.name === 'JsonWebTokenError') error = handleJWTError(error);
+
+    // NOTE: #2 token expired
+    if (error.name === 'TokenExpiredError')
+      error = handleJWTExpiredError(error);
 
     sendErrProd(error, res);
   }

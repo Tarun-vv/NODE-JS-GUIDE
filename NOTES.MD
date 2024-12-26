@@ -103,7 +103,7 @@ NOTE: CONNECTING MONGO SHELL to APP
 NOTE: creating Modals using mongoose
 
 1. create modals folder
-2. follow the steps
+2. follow the steps in tourModel.js
 3. export and import it to tourController.js file
 
 NOTE: creating documents out of Modals + CRUD functions
@@ -130,10 +130,11 @@ in tourModel.js
 3. AGGREGATION MIDDLEWARE -> preventing use of secret tour
 
 NOTE: VALIDATIONS
+PLAIN CUSTOM VALIDATOR
 in tourModel.js
 checking if input values match our requirements
 
-CUSTOM VALIDATORS
+CUSTOM VALIDATORS using VALIDATOR PACKAGE
 npm i validator
 
 NOTE: ERROR HANDLING
@@ -163,3 +164,36 @@ in server.js
 
 4. DATABASE CONNECTION ERROR: / UNHANDLED REJECTIONS -> or unhandled promise errors
 5. UNCAUGHT EXCEPTIONS -> errors in synchronous code but is not caught anywhere
+
+NOTE: JWT AUTHENTICATION - IMPORTANT
+
+1. create a user model AND manage password ->
+** checking if password confirm === password 
+** switching out the user's password with an encrypted password USING bcrypt
+npm i bycrptjs
+** deleting the passwordConfirm field
+
+--  ADVISED TO MAKE A userController.js file and add the getAllUsers function and add that route to userROute.js
+
+2. make a authController.js file
+3. create new user function
+4. create a user route called signup and add that route to the app.js file
+
+5. MAIN
+install JWT
+npm i jsonwebtoken
+
+in authController.js
+** LOGGING IN THE USER as THEY SIGN UP
+ create a JWT_SECRET in the config file and EXPIRES IN
+
+** LOGGING IN USERS
+make the login function in authController
+add the route in userRoutes.js
+
+** PROTECTING ROUTES
+1. in authController create protect function
+2. add that protect function in front of the getAllTours function in the tourRoutes
+3. go to POSTMAN and the getAllTours request -> go to the authorization tab and add Authorization and Bearer values
+4. starting writing code in the protect function
+5. need to handle JsonWebToken error AND TokenExpiredError -> go to errorController.js and add that functionality
