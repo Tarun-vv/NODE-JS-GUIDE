@@ -1,5 +1,9 @@
 const express = require('express');
 
+// NOTE: MAIN APP CREATION
+const app = express();
+app.use(express.json({ limit: '10kb' }));
+
 // NOTE: SECURITY
 // NOTE: #1) rate limiting
 const rateLimit = require('express-rate-limit');
@@ -42,10 +46,6 @@ app.use((req, res, next) => {
   console.log(req.headers);
   next();
 });
-
-// NOTE: MAIN APP CREATION
-const app = express();
-app.use(express.json({ limit: '10kb' }));
 
 // NOTE: ERROR HANDLING
 const AppError = require('./utils/appError');
