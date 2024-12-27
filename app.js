@@ -1,13 +1,51 @@
 const express = require('express');
 
-const app = express();
-app.use(express.json());
+// NOTE: SECURITY
+// NOTE: #1) rate limiting
+const rateLimit = require('express-rate-limit');
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests fromt this IP, please try again!',
+});
+app.use('/api', limiter);
+
+// NOTE: #2) HTTP HEADERS
+const helmet = require('helmet');
+app.use(helmet());
+
+// NOTE: #3) DATA SANITIZATION
+const mongoSanitize = require('express-mongo-sanitize');
+app.use(mongoSanitize());
+
+const xss = require('xss-clean');
+app.use(xss());
+
+// NOTE: #4) PARAMETER POLLUTION
+const hpp = require('hpp');
+app.use(
+  hpp({
+    // NOTE: allow some parameters to be duplicate
+    whitelist: [
+      'duration',
+      'ratingsQuantity',
+      'ratingsAverage',
+      'maxGroupSize',
+      'difficulty',
+      'price',
+    ],
+  }),
+);
 
 // NOTE: SIMPLE MIDDLEWARE FUNC
 app.use((req, res, next) => {
   console.log(req.headers);
   next();
 });
+
+// NOTE: MAIN APP CREATION
+const app = express();
+app.use(express.json({ limit: '10kb' }));
 
 // NOTE: ERROR HANDLING
 const AppError = require('./utils/appError');

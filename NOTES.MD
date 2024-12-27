@@ -239,3 +239,31 @@ NOTE: 2) RESET PASSWORD
 in authController.js
 
 NOTE: UPDATING CURRENT USER'S PASSWORD
+
+NOTE: UPDATE USER DATA -> userController
+add function and add route in userRoutes
+
+NOTE: DELETING A USER ACCOUNT
+create active filed in user modal
+set the active to false in the userController.js
+
+NOTE: storing JWT token as a cookie
+filter out the func into a simple fucn
+
+NOTE: SECURITY
+1. rate limiting -> app.js
+npm i express-rate-limit 
+and use it as a middleware
+
+2. http headers
+npm i helmet
+
+3. data sanitization
+#1) NoSQL query injection
+npm i express-mongo-sanitize
+
+#2 attacks against XSS
+npm i xss-clean
+
+4. parameter pollution
+npm i hpp

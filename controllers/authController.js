@@ -33,6 +33,15 @@ exports.signup = catchAsync(async (req, res, next) => {
   // NOTE: #1 sign takes in a payload which is the only thing we want to store in the token
   const token = signToken(newUser._id);
 
+  // FIXME: SENDING TOKEN AS A COOKIE
+  res.cookie('jwt', token, {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
+    ),
+    secure: true,
+    httpOnly: true,
+  });
+
   res.status(201).json({
     status: 'success',
     // NOTE: #2 sending token to the user
