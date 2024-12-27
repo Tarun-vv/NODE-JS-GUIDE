@@ -90,7 +90,7 @@ NOTE: connecting node app with mongo db and mogoose
 18. can look at data in CLUSTER by clicking on cluster -> collections
 19. whitelisting our network -> network access -> add IP address -> allow access from anywhere -> conform
 
----
+---------------------------------------
 
 NOTE: CONNECTING MONGO SHELL to APP
 
@@ -197,3 +197,45 @@ add the route in userRoutes.js
 3. go to POSTMAN and the getAllTours request -> go to the authorization tab and add Authorization and Bearer values
 4. starting writing code in the protect function
 5. need to handle JsonWebToken error AND TokenExpiredError -> go to errorController.js and add that functionality
+
+NOTE: USER ROLE AND PERMISSIONS
+1. make sure the role object is present in model
+2. add that restrictTo() function in the tourRoutes for deleting
+
+NOTE: PASSWORD RESET -> 
+
+NOTE: 1) FORGOT PASSWORD
+** ONE STEP IS TO send email to the user 
+** create email.js in utils folder
+npm i nodemailer
+
+
+FOR GMAIL: 
+
+set EMAIL_USERNAME=tarunv1911@gmail.com
+EMAIL_PASSWORD=*****
+
+const transporter = nodemailer.createTransporter({
+   service: 'Gmail',
+   auth: {
+      user: process.env.EMAIL_USERNAME
+      pass: process.env.EMAIL_PASSWORD
+   }
+
+   Activate in gmail 'less secure app' option
+})
+ --------------------------
+
+to prevent mails from reaching users sign in to mailtrap
+inboxes -> add inbox -> give it a name -> and click on the newly created mail
+
+copy the USERNAME AND PASSWORD option and set them up in the config file under EMAIL_USERNAME and EMAIL_PASSWORD
+
+after all code export it and import in authController.js
+
+i fyou go to postman to the forgotPassword route and input email in body the success status should come and mail should be in mailtrap
+
+NOTE: 2) RESET PASSWORD
+in authController.js
+
+NOTE: UPDATING CURRENT USER'S PASSWORD

@@ -16,6 +16,11 @@ const userSchema = new mongoose.Schema({
     validate: [validator.isEmail, 'Please input a valid email'],
   },
   photo: String,
+  role: {
+    type: String,
+    enum: ['user', 'guide', 'lead-guide', 'admin'],
+    default: 'user',
+  },
   password: {
     type: String,
     required: [true, 'Please provide a password'],
@@ -36,6 +41,8 @@ const userSchema = new mongoose.Schema({
     },
   },
   passwordChangedAt: Date,
+  passwordResetToken: String,
+  passwordResetExpires: Date,
 });
 
 // NOTE: SWITCHING OUT USER'S ORIGINAL PASSWORD WITH AN ENCRYPTED PASSWORD
@@ -63,11 +70,44 @@ userSchema.methods.correctPassword = async function (
 // NOTE: JWT password changed function
 userSchema.methods.changedPasswordAfter = function (JWTTimeStamp) {
   if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10,
+    );
+
     console.log(this.passwordChangedAt, JWTTimeStamp);
+    return JWTTimeStamp < changedTimestamp;
   }
 
   return false;
+  next();
 };
+
+// NOTE: GENERATING RANDOM TOKEN METHOD FOR PASSWORD RESET
+const crypto = require('crypto');
+userSchema.methods.createPasswordResetToken = function () {
+  // NOTE: token that we will send to the user
+  const resetToken = crypto.randomBytes(32).toString('hex');
+
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  console.log({ resetToken }, this.passwordResetToken);
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
+  next();
+};
+
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
 
 const User = mongoose.model('User', userSchema);
 
