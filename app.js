@@ -116,6 +116,7 @@ app.use(express.static(`${__dirname}/public`)); // NOTE: file does not exist her
 // NOTE: IMPORTING tourRouter from file
 const tourRouter = require('./routers/tourRoutes');
 const userRouter = require('./routers/userRoutes');
+const reviewRouter = require('./routers/reviewRoutes');
 
 // NOTE: FINAL VERSION OF ROUTE:
 
@@ -125,6 +126,7 @@ const userRouter = require('./routers/userRoutes');
 // NOTE: #2 call the middleware with the route and the router
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/reviews', reviewRouter);
 
 // app.route('/api/v1/tours').get(getAllTours);
 // NOTE: #3 replace the app with tourRouter

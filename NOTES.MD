@@ -267,3 +267,23 @@ npm i xss-clean
 
 4. parameter pollution
 npm i hpp
+
+NOTE: MODELLING DATA
+in tourModel.js
+
+1. NOTE: GEOSPATIAL DATA
+data that describes places on earth using longitude and latitude
+
+2. NOTE: CHILD referencing -> guides
+in model make the field and add ref
+2. make the popualte middlelware in tourModel.js
+
+NOTE: PARENT REFERENCING -> reviews
+1. make review model
+
+NOTE: up to now we referenced the tour from the review that is like this REVIEW -> tour but what if we wanted to do it the other wy around like this TOUR -> review, getiing access to reviews FROM a tour. To do that we use virtual populate 
+
+middleware function in tourModel.js
+
+NOTE: nested route functionality
+create that route in tourRoutes.js

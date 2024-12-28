@@ -31,6 +31,7 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
+    results: tours.length,
     data: {
       tours,
     },
@@ -55,7 +56,9 @@ exports.createTour = catchAsync(async (req, res, next) => {
 
 exports.getTour = catchAsync(async (req, res, next) => {
   // NOTE: get specific tour
+  // NOTE: add populate function LATER when you do referencing
   const tour = await Tour.findById(req.params.id);
+  // NOTE: the name of the field
 
   // NOTE: 404 ERROR
   if (!tour) {

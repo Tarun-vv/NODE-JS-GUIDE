@@ -1,6 +1,9 @@
 const express = require('express');
 const tourController = require('./../controllers/tourController');
 
+// NOTE: FOR NESTED ROUTE FUNCTIONALITY
+const reviewController = require('./../controllers/reviewController');
+
 // NOTE: FOR PROTECT ROUTE:
 const authController = require('./../controllers/authController');
 
@@ -36,6 +39,15 @@ router
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
     tourController.deleteTour,
+  );
+
+// NOTE: NESTED ROUTE FUNCTIONALITY
+router
+  .route('/:tourId/reviews')
+  .post(
+    authController.protect,
+    authController.restrictTo('user'),
+    reviewController.createReview,
   );
 
 module.exports = router;

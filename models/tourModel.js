@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 const validator = require('validator');
 
+// NOTE: IMPORT FOR EMBEDDING
+const User = require('./../models/userModel');
+
 // NOTE: CREATING MONGOOSE / MONGODB MODELS
 
 // NOTE: #1 create a schema
@@ -98,6 +101,39 @@ const tourSchema = new mongoose.Schema(
     secretTour: {
       type: Boolean,
     },
+    startLocation: {
+      // NOTE: for geospatial data we use geoJSON -> to let mongoDB know that this is a geospatial data we have to setup a couple of options
+      type: {
+        // NOTE: we need type schema options
+        type: String,
+        default: 'Point',
+        enum: ['Point'],
+      },
+      coordinates: [Number], // NOTE: expects an array of numbers with (longitude, latitude)
+      address: String,
+      description: String,
+    },
+    locations: [
+      // NOTE: embedded documents -> specify an object in an array and each object will be one specific document
+      {
+        type: {
+          type: String,
+          default: 'Point',
+          enum: ['Point'],
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number,
+      },
+    ],
+    // NOTE: REFERENCING DOCUMENTS
+    guides: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     // #fff NOTE: defining the virtual properties in output
@@ -105,8 +141,6 @@ const tourSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   },
 );
-
-
 
 // NOTE: model property: 1st arg is name of model, 2nd arg is the schema we created
 
@@ -148,6 +182,22 @@ tourSchema.pre('aggregate', function (next) {
   // NOTE: to ensure that the secret tour is not getting used in the pipeline
   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
   next();
+});
+
+// NOTE: REFERENCING DOCUMENTS POPULATE MIDDLEWARE
+tourSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt',
+  });
+  next();
+});
+
+// NOTE: VIRTUAL POPULATE MIDDLEWARE FUNCTION to get reviews
+tourSchema.virtual('review', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id',
 });
 
 // NOTE: test tour creation

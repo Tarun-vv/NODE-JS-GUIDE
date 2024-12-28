@@ -63,7 +63,7 @@ exports.createTour = catchAsync(async (req, res) => {
 exports.getTour = async (req, res) => {
   try {
     // NOTE: get specific tour
-    const tour = await Tour.findById(req.params.id);
+    const tour = await Tour.findById(req.params.id).populate('reviews');
 
     res.status(201).json({
       status: 'success',
